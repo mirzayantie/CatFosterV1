@@ -1,0 +1,9 @@
+.DS_Store
+Pods/
+xcuserdata/
+CatFoster_.xcworkspace/xcuserdata/
+UserInterfaceState.xcuserstate
+DerivedData/
+build/
+CatFoster_.xcworkspace/xcshareddata/
+WorkspaceSettings.xcsettings
