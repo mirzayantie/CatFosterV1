@@ -25,13 +25,13 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        let backgroundColor = DynamicColor(hex: 0xDFF0EA)
-        self.view.backgroundColor = backgroundColor
+        let color = DynamicColor(hex: 0x95ADBE)
+        self.view.backgroundColor = color
         let loginButtonColor = DynamicColor(hex: 0x4F3A65)
-        let registerButtonColor = DynamicColor(hex: 0x95ADBE)
+        //let registerButtonColor = DynamicColor(hex: 0x95ADBE)
         loginButton.backgroundColor = loginButtonColor
         registerButton.borderColor = loginButtonColor
-        registerButton.backgroundColor = registerButtonColor
+        registerButton.backgroundColor = color
         
         // add activity indicator
         activityIndicator.center = self.view.center

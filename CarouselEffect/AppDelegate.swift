@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import DynamicColor
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,21 +20,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
        FirebaseApp.configure()
-//     let accessToken = UserDefaults.standard.value(forKey: "accessToken")
-//
-//        if accessToken != nil {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "TabBarViewController") as? TabBarViewController
+// storyboard.instantiateViewController(withIdentifier: "TabBarViewController") as? TabBarViewController
 //
 //            let appDelegate = UIApplication.shared.delegate as? AppDelegate
 //            appDelegate?.window?.rootViewController = vc
 //            appDelegate?.window?.makeKeyAndVisible()
 //        }
 //
-        let tabColor = DynamicColor(hex: 0x95ADBE)
-        UITabBar.appearance().tintColor = .black
-        UITabBar.appearance().backgroundColor = tabColor
-    
+        //tab bar color
+        let color = DynamicColor(hex: 0x95ADBE)
+        UITabBar.appearance().tintColor = color
+        
+        //navi bar custom setting
+        let navItem = DynamicColor(hex: 0x4F3A65)
+        UINavigationBar.appearance().barTintColor = color
+        UINavigationBar.appearance().tintColor = navItem
+        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:navItem]
+       
         return true
     }
 

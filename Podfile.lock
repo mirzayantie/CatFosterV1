@@ -1,4 +1,5 @@
 PODS:
+  - AnimatedTabBar (0.1.7)
   - DynamicColor (4.2.0)
   - Firebase/Auth (6.9.0):
     - Firebase/CoreOnly
@@ -93,6 +94,7 @@ PODS:
   - nanopb/encode (0.3.901)
 
 DEPENDENCIES:
+  - AnimatedTabBar (~> 0.1)
   - DynamicColor (~> 4.2.0)
   - Firebase/Auth
   - Firebase/Core
@@ -102,6 +104,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AnimatedTabBar
     - DynamicColor
     - Firebase
     - FirebaseAnalytics
@@ -123,6 +126,7 @@ SPEC REPOS:
     - nanopb
 
 SPEC CHECKSUMS:
+  AnimatedTabBar: ce6bc2c2993bd74b4b51c7977631e3321f417095
   DynamicColor: c475f66bda1cabf602f2c54ac1171c0c07148a5a
   Firebase: 2d750c54cda57d5a6ae31212cfe5cc813c6be7e4
   FirebaseAnalytics: 5d9ccbf46ed25d3ec9304d263f85bddf1e93e2d2
@@ -143,6 +147,6 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
 
-PODFILE CHECKSUM: 1bb54c3409e127c6d3bfb04a6d1fb33015817e20
+PODFILE CHECKSUM: 09a2358d5af73ba679a773e280d5c2e0895cc822
 
 COCOAPODS: 1.7.5

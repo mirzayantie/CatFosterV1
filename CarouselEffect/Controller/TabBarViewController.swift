@@ -9,13 +9,12 @@
 import UIKit
 import DynamicColor
 
+
 class TabBarViewController: UITabBarController {
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tabBarColor = DynamicColor(hex: 0x95ADBE)
-        self.view.backgroundColor = tabBarColor
        
         // Do any additional setup after loading the view.
     }

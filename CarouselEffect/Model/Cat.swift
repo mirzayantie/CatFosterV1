@@ -24,7 +24,6 @@ class Cat
     init(catName: String, catImageURL: String, catBreed:String, catAge:String, catGender: String, catDescription: String, catColour: String, additionalInfo: String)
     {
         
-       
         self.catImageURL = catImageURL
         self.catName = catName
         self.catAge = catAge

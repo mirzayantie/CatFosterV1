@@ -60,7 +60,7 @@ class DetailCatInfoController : UIViewController {
     func loadDetailCat() {
         activityIndicator.startAnimating()
         image.image = getCatImage
-        name.text = getCatName
+        name.text = "My name is \(getCatName)!"
         gender.text = getCatGender
         about.text = getCatDescription
         age.text = getCatAge

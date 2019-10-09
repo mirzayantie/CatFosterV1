@@ -32,13 +32,16 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //hide nav
+        self.navigationController?.setNavigationBarHidden(true, animated:true)
         //add custom color
-        let backgroundColor = DynamicColor(hex: 0xDFF0EA)
-        self.view.backgroundColor = backgroundColor
         let continueButtonColor = DynamicColor(hex: 0x95ADBE)
         let borderColor = DynamicColor(hex: 0x4F3A65)
         continueButton.borderColor = borderColor
         continueButton.backgroundColor = continueButtonColor
+        //let backgroundColor = DynamicColor(hex: 0xDFF0EA)
+        self.view.backgroundColor = continueButtonColor
+
         
         // add activity indicator
         activityIndicator.center = self.view.center
@@ -51,6 +54,11 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        
+    }
     // MARK Authenticate user and save profile image to storage
     @IBAction func continueButtonClicked(_ sender: RoundButton) {
         
@@ -60,7 +68,7 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         }
         //register the user
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-            self.activityIndicator.startAnimating()
+            
             if error != nil {
                 print(error!)
                 
@@ -72,7 +80,7 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
             }
             print("creating user...")
             self.saveFIRData()
-            self.activityIndicator.stopAnimating()
+            
             
         } //create user end
         
@@ -82,14 +90,15 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
     
 func saveFIRData() {
     print("saving data...")
-    
+    activityIndicator.startAnimating()
     guard let uid = Auth.auth().currentUser?.uid else {return}
     
             //self.uploadImage(self.userProfileImage.image!) { (url) in
                   self.saveUserData(name: self.nameTextfield.text!, uid:uid, email: self.emailTextfield.text!,
                                   password: self.passwordTextfield.text!){ success in
                     if success != nil {
-                        
+                        print("saving success")
+                        self.activityIndicator.startAnimating()
                 }
             //}
        }

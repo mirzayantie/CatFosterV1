@@ -13,9 +13,10 @@ import DynamicColor
 
 class CatListController: UITableViewController {
     
-
-    var catList : [Cat] = [Cat]()
+    
+    var catList = [Cat]() //all list of cat
     var ref: DatabaseReference!
+    var searchCat = [Cat]() // update table list with search result
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +25,13 @@ class CatListController: UITableViewController {
         self.tableView.separatorStyle = .none
         ref = Database.database().reference()
         loadCatList()
+        setupSearchBar()
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     
     //MARK: Private Methods. load from server
     private func loadCatList() {
@@ -64,7 +69,7 @@ class CatListController: UITableViewController {
                 let cats = Cat(catName: catName, catImageURL: catImageURL, catBreed: catBreed, catAge: catAge, catGender: catGender, catDescription: catDescription, catColour: catColour, additionalInfo: catAddInfo)
                 
                 self.catList += [cats]
-                
+                self.searchCat = self.catList
                 //print("Amount of data from local \(self.catList.count)")
             }
             //reload local data when get data from server
@@ -84,18 +89,17 @@ class CatListController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return catList.count
+        return searchCat.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "catViewCell", for: indexPath) as? CatViewCell else {
-            fatalError("The dequeued cell is not an isntance of MealTableViewCell")
+            fatalError("The dequeued cell is not an instance of CatViewCell")
         }
        
-        cell.catModel = catList[indexPath.row]
-        print(cell.catModel!)
+        cell.catModel = searchCat[indexPath.row]
         //cell.catName.text = cats.catName
         //cell.catImage.image = cats.catImageURL
         //cell.catGender.text = cats.catGender
@@ -106,6 +110,9 @@ class CatListController: UITableViewController {
     // MARK : Pass cats detail to detailCatController
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        
         let detailCatController = storyboard?.instantiateViewController(withIdentifier: "DetailCatInfoController") as? DetailCatInfoController
    
         detailCatController?.getCatName = catList[indexPath.row].catName
@@ -124,6 +131,41 @@ class CatListController: UITableViewController {
 
         self.navigationController?.pushViewController(detailCatController!, animated: true)
         }
+        
+        //add this so that when cell gets selected it just blinked (@ deselected)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
+}
+
+extension CatListController: UISearchBarDelegate {
+    
+    private func setupSearchBar() {
+        
+        let searchBar = UISearchBar()
+        
+        searchBar.delegate = self
+        
+        let color = DynamicColor(hex: 0x95ADBE)
+        searchBar.barTintColor = color
+        searchBar.showsCancelButton = false
+        searchBar.placeholder = "Search by Colour"
+        //put searchbar on navigation bar
+        navigationItem.titleView = searchBar
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            searchCat = catList
+            tableView.reloadData()
+            return
+        }
+        
+        //if true= not filter, false = filter
+        searchCat = catList.filter({ (cat) -> Bool in
+            //guard let text = searchBar.text else { return false}
+            cat.catColour.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
 }
