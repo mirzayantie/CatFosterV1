@@ -13,6 +13,5 @@ target 'CarouselEffect' do
   pod 'Firebase/Storage'
   pod 'Kingfisher', '~> 5.0' 
   pod 'DynamicColor', '~> 4.2.0'
-  pod 'AnimatedTabBar', '~> 0.1'
 
 end

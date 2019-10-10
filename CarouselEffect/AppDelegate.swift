@@ -27,15 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            appDelegate?.window?.makeKeyAndVisible()
 //        }
 //
-        //tab bar color
-        let color = DynamicColor(hex: 0x95ADBE)
+        //navi bar and tab bar custom setting
+        let color = DynamicColor(hex: 0x4F3A65)
         UITabBar.appearance().tintColor = color
-        
-        //navi bar custom setting
-        let navItem = DynamicColor(hex: 0x4F3A65)
         UINavigationBar.appearance().barTintColor = color
-        UINavigationBar.appearance().tintColor = navItem
-        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:navItem]
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
        
         return true
     }

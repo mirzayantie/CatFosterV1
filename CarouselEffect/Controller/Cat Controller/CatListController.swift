@@ -23,6 +23,8 @@ class CatListController: UITableViewController {
         let backgroundColor = DynamicColor(hex: 0xDFF0EA)
         self.view.backgroundColor = backgroundColor
         self.tableView.separatorStyle = .none
+        navigationItem.title = "Cat List"
+        navigationItem.largeTitleDisplayMode = .automatic
         ref = Database.database().reference()
         loadCatList()
         setupSearchBar()
@@ -35,8 +37,8 @@ class CatListController: UITableViewController {
     
     //MARK: Private Methods. load from server
     private func loadCatList() {
-       
-
+        
+        
         let catRef = ref.child("cat")
         //read from firebase database
         catRef.observe(DataEventType.value, with: { (snapshot) in
@@ -56,15 +58,15 @@ class CatListController: UITableViewController {
             
             for (key, value) in postDict {
                 print("\(key) -> \(value)")
-                    
-                    catName = value["name"] as! String
-                    catImageURL = value["photo"] as? String ?? ""
-                    catBreed = value["breed"] as! String
-                    catAge = value["age"] as! String
-                    catGender = value["gender"] as! String
-                    catColour = value["colour"] as! String
-                    catDescription = value["description"] as! String
-                    catAddInfo = value["otherInfo"] as! String
+                
+                catName = value["name"] as! String
+                catImageURL = value["photo"] as? String ?? ""
+                catBreed = value["breed"] as! String
+                catAge = value["age"] as! String
+                catGender = value["gender"] as! String
+                catColour = value["colour"] as! String
+                catDescription = value["description"] as! String
+                catAddInfo = value["otherInfo"] as! String
                 
                 let cats = Cat(catName: catName, catImageURL: catImageURL, catBreed: catBreed, catAge: catAge, catGender: catGender, catDescription: catDescription, catColour: catColour, additionalInfo: catAddInfo)
                 
@@ -98,7 +100,7 @@ class CatListController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "catViewCell", for: indexPath) as? CatViewCell else {
             fatalError("The dequeued cell is not an instance of CatViewCell")
         }
-       
+        
         cell.catModel = searchCat[indexPath.row]
         //cell.catName.text = cats.catName
         //cell.catImage.image = cats.catImageURL
@@ -114,7 +116,7 @@ class CatListController: UITableViewController {
         
         
         let detailCatController = storyboard?.instantiateViewController(withIdentifier: "DetailCatInfoController") as? DetailCatInfoController
-   
+        
         detailCatController?.getCatName = catList[indexPath.row].catName
         detailCatController?.getCatAge = catList[indexPath.row].catAge
         detailCatController?.getCatColour = catList[indexPath.row].catColour
@@ -128,8 +130,8 @@ class CatListController: UITableViewController {
         KingfisherManager.shared.retrieveImage(with: url!, options: nil, progressBlock: nil ) { (image, error, cache, url) in
             
             detailCatController?.getCatImage = image!
-
-        self.navigationController?.pushViewController(detailCatController!, animated: true)
+            
+            self.navigationController?.pushViewController(detailCatController!, animated: true)
         }
         
         //add this so that when cell gets selected it just blinked (@ deselected)
@@ -152,10 +154,12 @@ extension CatListController: UISearchBarDelegate {
         searchBar.placeholder = "Search by Colour"
         //put searchbar on navigation bar
         navigationItem.titleView = searchBar
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
+            //searchBar is empty, not filter
             searchCat = catList
             tableView.reloadData()
             return
@@ -163,9 +167,11 @@ extension CatListController: UISearchBarDelegate {
         
         //if true= not filter, false = filter
         searchCat = catList.filter({ (cat) -> Bool in
-            //guard let text = searchBar.text else { return false}
-            cat.catColour.lowercased().contains(searchText.lowercased())
+         cat.catColour.lowercased().contains(searchText.lowercased())
         })
+    
+            
+       // }
         tableView.reloadData()
     }
 }

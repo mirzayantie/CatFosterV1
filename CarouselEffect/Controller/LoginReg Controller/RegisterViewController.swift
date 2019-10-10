@@ -39,8 +39,8 @@ class RegisterViewController: UIViewController, UIImagePickerControllerDelegate,
         let borderColor = DynamicColor(hex: 0x4F3A65)
         continueButton.borderColor = borderColor
         continueButton.backgroundColor = continueButtonColor
-        //let backgroundColor = DynamicColor(hex: 0xDFF0EA)
-        self.view.backgroundColor = continueButtonColor
+        let backgroundColor = DynamicColor(hex: 0xDFF0EA)
+        self.view.backgroundColor = backgroundColor
 
         
         // add activity indicator

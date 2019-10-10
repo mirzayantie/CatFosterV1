@@ -40,6 +40,7 @@ class AddCatController: UIViewController, UITextFieldDelegate, UIImagePickerCont
         self.submitButton.backgroundColor = buttonColor
         self.submitButton.tintColor = buttonTint
         
+        
         //catName.delegate = self
         self.ref = Database.database().reference()
         //Set up views if editing an existing cat

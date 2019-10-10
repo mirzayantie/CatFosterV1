@@ -47,6 +47,10 @@ class DetailCatInfoController : UIViewController {
         genderView.backgroundColor = infoViewColor
         colorView.backgroundColor = infoViewColor
         adoptMeButton.backgroundColor = buttonColor
+        
+        navigationItem.title = "Cat Details"
+        navigationItem.largeTitleDisplayMode = .automatic
+        
         // add activity indicator
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
