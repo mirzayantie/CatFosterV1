@@ -17,6 +17,7 @@ class CatListController: UITableViewController {
     var catList = [Cat]() //all list of cat
     var ref: DatabaseReference!
     var searchCat = [Cat]() // update table list with search result
+    let searchBar = UISearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,16 +143,23 @@ class CatListController: UITableViewController {
 
 extension CatListController: UISearchBarDelegate {
     
+    enum selectedScope : Int {
+        case Breed = 0
+        case Colour = 1
+        case Age = 2
+    }
+    
     private func setupSearchBar() {
-        
-        let searchBar = UISearchBar()
         
         searchBar.delegate = self
         
         let color = DynamicColor(hex: 0x95ADBE)
-        searchBar.barTintColor = color
+        let darkColor = DynamicColor(hex: 0x4f3a65)
+        searchBar.barTintColor = darkColor
         searchBar.showsCancelButton = false
-        searchBar.placeholder = "Search by Colour"
+        searchBar.showsScopeBar = true
+        searchBar.tintColor = color
+        searchBar.scopeButtonTitles = ["Breed", "Colour", "Age"]
         //put searchbar on navigation bar
         navigationItem.titleView = searchBar
         
@@ -159,19 +167,37 @@ extension CatListController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
-            //searchBar is empty, not filter
+            //searchBar is empty, show all cats
             searchCat = catList
             tableView.reloadData()
             return
         }
+        filterTableView(index: searchBar.selectedScopeButtonIndex, text: searchText)
         
-        //if true= not filter, false = filter
-        searchCat = catList.filter({ (cat) -> Bool in
-         cat.catColour.lowercased().contains(searchText.lowercased())
-        })
-    
-            
-       // }
         tableView.reloadData()
+    }
+    
+    func filterTableView(index : Int, text : String) {
+        
+        switch index {
+            //enum selectedScope case 0 = Breed
+        case selectedScope.Breed.rawValue:
+            searchCat = catList.filter({ (cat) -> Bool in
+                return cat.catBreed.lowercased().contains(text.lowercased())
+                
+            })
+        case selectedScope.Colour.rawValue:
+            searchCat = catList.filter({ (cat) -> Bool in
+                return cat.catColour.lowercased().contains(text.lowercased())
+            })
+        case selectedScope.Age.rawValue:
+            searchCat = catList.filter({ (cat) -> Bool in
+                return cat.catAge.lowercased().contains(text.lowercased())
+            })
+            
+        default:
+            searchCat = catList
+        }
+        
     }
 }
